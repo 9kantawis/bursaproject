@@ -1,0 +1,20 @@
+{% extends "shop/base.html" %}
+{% block title %}Оформление - чоточото{% endblock %}
+{% block content %}
+<a class="back" href="{% url 'shop:cart' %}">Назад в корзину</a>
+<h1>Оформление</h1>
+<div class="cart-layout">
+  <form method="post" class="checkout-form">
+    {% csrf_token %}
+    {% if error %}<p class="error">{{ error }}</p>{% endif %}
+    <div class="field"><label for="name">Имя</label><input id="name" name="name" maxlength="100" required value="{{ request.POST.name }}"></div>
+    <div class="field"><label for="phone">Телефон</label><input id="phone" name="phone" maxlength="30" required value="{{ request.POST.phone }}"></div>
+    <button type="submit">Подтвердить заказ</button>
+  </form>
+  <aside class="summary">
+    <p>Ваши товары</p>
+    {% for row in rows %}<div class="summary-line"><span>{{ row.product.name }}, {{ row.quantity }} шт</span><b>{{ row.subtotal|floatformat:0 }} руб</b></div>{% endfor %}
+    <hr><strong>Итого: {{ total|floatformat:0 }} руб</strong>
+  </aside>
+</div>
+{% endblock %}

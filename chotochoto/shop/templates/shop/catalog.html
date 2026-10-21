@@ -1,0 +1,27 @@
+{% extends "shop/base.html" %}
+{% block title %}Каталог - чоточото{% endblock %}
+{% block content %}
+<div class="page-top">
+  <h1>Каталог товаров</h1>
+  <p class="muted">{{ products|length }} товаров</p>
+</div>
+<form class="search" method="get">
+  <input type="search" name="q" placeholder="Поиск по товарам" value="{{ query }}" aria-label="Поиск по товарам">
+  <button type="submit">Найти</button>
+</form>
+<div class="grid">
+  {% for product in products %}
+  <article class="card">
+    <a class="product-image" href="{% url 'shop:product' product.slug %}">
+      {% if product.image %}<img src="{{ product.image.url }}?v=2" alt="{{ product.name }}">{% else %}<span>Нет фото</span>{% endif %}
+    </a>
+    <div class="card-body">
+      <a class="product-name" href="{% url 'shop:product' product.slug %}">{{ product.name }}</a>
+      <div class="card-bottom"><strong>{{ product.price|floatformat:0 }} руб</strong>
+        <a class="button small-button" href="{% url 'shop:cart_add' product.id %}">В корзину</a>
+      </div>
+    </div>
+  </article>
+  {% empty %}<p class="empty">Товары не найдены.</p>{% endfor %}
+</div>
+{% endblock %}

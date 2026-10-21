@@ -1,0 +1,15 @@
+{% extends "shop/base.html" %}
+{% block title %}{{ product.name }} - чоточото{% endblock %}
+{% block content %}
+<a class="back" href="{% url 'shop:catalog' %}">Назад в каталог</a>
+<div class="detail">
+  <div class="detail-image">{% if product.image %}<img src="{{ product.image.url }}?v=2" alt="{{ product.name }}">{% else %}<span>Нет фото</span>{% endif %}</div>
+  <div>
+    <h1>{{ product.name }}</h1>
+    <p class="description">{{ product.description }}</p>
+    <div class="detail-purchase"><strong>{{ product.price|floatformat:0 }} руб</strong>
+      <a class="button" href="{% url 'shop:cart_add' product.id %}">Добавить в корзину</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

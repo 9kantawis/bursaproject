@@ -1,0 +1,5 @@
+{% extends "shop/base.html" %}
+{% block title %}Заказ готов - чоточото{% endblock %}
+{% block content %}
+<div class="empty-panel thanks"><h1>Заказ {{ order_id }} сохранен</h1><a class="button" href="{% url 'shop:catalog' %}">В каталог</a></div>
+{% endblock %}

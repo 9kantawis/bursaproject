@@ -1,0 +1,26 @@
+{% load static %}
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}чоточото{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'shop/style.css' %}?v=2">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="{% url 'shop:catalog' %}">чоточото</a>
+      <nav>
+        <a href="{% url 'shop:catalog' %}">Каталог</a>
+        <a href="{% url 'shop:cart' %}">Корзина <span class="count">{{ request.session.cart|length }}</span></a>
+      </nav>
+    </div>
+  </header>
+  <main class="container">
+    {% if messages %}<div class="messages">{% for message in messages %}<p class="{{ message.tags }}">{{ message }}</p>{% endfor %}</div>{% endif %}
+    {% block content %}{% endblock %}
+  </main>
+  <footer class="container footer">чоточото</footer>
+</body>
+</html>

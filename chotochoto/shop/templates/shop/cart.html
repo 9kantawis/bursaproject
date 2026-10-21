@@ -1,0 +1,24 @@
+{% extends "shop/base.html" %}
+{% block title %}Корзина - чоточото{% endblock %}
+{% block content %}
+<div class="page-top"><h1>Корзина</h1></div>
+{% if rows %}
+<div class="cart-layout"><div class="cart-list">
+  {% for row in rows %}
+  <div class="cart-row">
+    <div class="cart-thumb">{% if row.product.image %}<img src="{{ row.product.image.url }}?v=2" alt="">{% else %}Нет фото{% endif %}</div>
+    <div class="cart-title"><a href="{% url 'shop:product' row.product.slug %}">{{ row.product.name }}</a><p class="muted small">{{ row.product.price|floatformat:0 }} руб за шт</p></div>
+    <form method="get" action="{% url 'shop:cart_update' row.product.id %}" class="quantity-form">
+      <label for="quantity-{{ row.product.id }}">Шт.</label>
+      <input id="quantity-{{ row.product.id }}" type="number" name="quantity" min="0" value="{{ row.quantity }}">
+      <button type="submit" class="text-button">Обновить</button>
+      <a class="remove-link" href="{% url 'shop:cart_update' row.product.id %}?quantity=0">Убрать</a>
+    </form>
+    <strong>{{ row.subtotal|floatformat:0 }} руб</strong>
+  </div>
+  {% endfor %}
+</div><aside class="summary"><p>Итого</p><strong>{{ total|floatformat:0 }} руб</strong><a class="button" href="{% url 'shop:checkout' %}">Оформить</a></aside></div>
+{% else %}
+<div class="empty-panel"><p>В корзине пока пусто.</p><a class="button" href="{% url 'shop:catalog' %}">Перейти в каталог</a></div>
+{% endif %}
+{% endblock %}
